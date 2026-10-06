@@ -1,0 +1,26 @@
+const http = require("http");
+const os = require("os");
+const path = require("path");
+const eventEmitter = require("events");
+
+//os module
+console.log("platform:", os.platform());
+console.log("Free Memory", os.freemem());
+
+//path module
+console.log("File Name:", path.basename(__filename));
+
+//event module
+const event = new eventEmitter();
+event.on("welcome",()=>console.log("Welcome Event Triggered!"));
+
+//http module
+const server = http.createServer((req,res) => {
+    event.emit("welcome");
+    res.end("Hello! Welcome to Node.js Server");
+});
+
+server.listen(3000,() => {
+    console.log("Server running at http://localhost:3000");
+});
+
